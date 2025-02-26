@@ -21,14 +21,17 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     
     private final  CategoriaControl CONTROL;
     private String accion;
+    private String nombreAnt;
     
     
     public FrmCategoria() {
         initComponents();
-        this.CONTROL = new  CategoriaControl();
+        this.CONTROL = new CategoriaControl();
         this.listar("");
         tabGeneral.setEnabledAt(1, false);
         this.accion = "Guardar";
+        txtId.setVisible(false);
+        
     }
     
     private void listar(String texto){
@@ -49,8 +52,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     }
     
     private void mensajeError(String mensaje){
-    JOptionPane.showMessageDialog(this,mensaje,"Sistema", JOptionPane.ERROR);
-    
+    JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
     }
     
     private void mensajeOk(String mensaje){
@@ -83,6 +85,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -197,6 +200,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(121, 121, 121)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -204,14 +208,15 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                                 .addGap(109, 109, 109)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                                    .addComponent(txtNombre)))
-                            .addComponent(jLabel4)))
+                                    .addComponent(txtNombre))
+                                .addGap(32, 32, 32)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(273, 273, 273)
                         .addComponent(btnGuardar)
                         .addGap(34, 34, 34)
                         .addComponent(btnCancelar)))
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +224,8 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                 .addGap(88, 88, 88)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -269,6 +275,27 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnNuevoActionPerformed
     
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if(tablaListado.getSelectedRowCount() == 1){
+                String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
+                String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+                String descripcion = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 2));
+                nombreAnt = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
+
+                txtId.setText(id);
+                txtNombre.setText(nombre);
+                txtDescripcion.setText(descripcion);
+                
+                tabGeneral.setEnabledAt(0, false);
+                tabGeneral.setEnabledAt(1, true);
+                tabGeneral.setSelectedIndex(1);
+                this.accion = "editar";
+                btnGuardar.setText("Editar");
+        }else{
+            this.mensajeError("Selecciona un registro");
+        }
+        
+        
+        
 //        if(tablaListado.getSelectedColumn() == 1){
 //            String id = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 0));
 //            String nombre = String.valueOf(tablaListado.getValueAt(tablaListado.getSelectedRow(), 1));
@@ -304,28 +331,53 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if(txtNombre.getText().length() == 0){
-            JOptionPane.showMessageDialog(this,"Nombre es obligatorio.",
+        if (txtNombre.getText().length() == 0 || txtNombre.getText().length()>30){
+            JOptionPane.showMessageDialog(this, "Nombre 30 caracteres maxismo",
                     "Systema", JOptionPane.WARNING_MESSAGE);
             txtNombre.requestFocus();
             return;
         }
+        
+          if ( txtNombre.getText().length()>30){
+            JOptionPane.showMessageDialog(this, "Nombre 30 caracteres maxismo",
+                    "Systema", JOptionPane.WARNING_MESSAGE);
+            txtNombre.requestFocus();
+            return;
+        }
+
         String respuesta;
-        if(this.accion.equals("editar")){
-            //Editar
+
+        if (this.accion.equals("editar")) {
+            // Editar
+           respuesta = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), 
+                   txtNombre.getText(),this.nombreAnt , txtDescripcion.getText());
+           
+           if (respuesta.equals("OK")) {
+                    this.mensajeOk("Registrado Correctamente");
+                    this.limpiar();
+                    this.listar("");
+                    
+                    tabGeneral.setEnabledAt(0, false);
+                    tabGeneral.setEnabledAt(0, true);
+                    tabGeneral.setSelectedIndex(0);
+                    
+            } else {
+                this.mensajeError(respuesta);
+            }
+           
         } else {
-            //Guardar               //Guardar
             respuesta = this.CONTROL.Insertar(txtNombre.getText(), txtDescripcion.getText());
-            
-            if(respuesta.equals("Ok")){
-            this.mensajeOk("Registro Correctamente");
-            this.limpiar();
-            this.listar("");
-        } else{
-            this.mensajeError(respuesta);
+            if (respuesta.equals("OK")) {
+                    this.mensajeOk("Registrado Correctamente");
+                    this.limpiar();
+                    this.listar("");
+            } else {
+                this.mensajeError(respuesta);
+            }
         }
             
-        }
+            
+        
         
         
         
@@ -351,6 +403,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     private javax.swing.JTable tablaListado;
     private javax.swing.JTextField tfBuscar;
     private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

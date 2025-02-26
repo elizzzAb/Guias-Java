@@ -58,6 +58,8 @@ public class CategoriaDAO implements CRUDGeneralInterface<Categoria>{
         resp = false;
         try {
             ps = conectar.conectar().prepareStatement("INSERT INTO categoria(?,?,1)");
+            ps = conectar.conectar().prepareStatement
+        ("INSERT INTO categoria (nombre,descripcion, estado) VALUES(?,?,1)");
             ps.setString(1, object.getNombre());
             ps.setString(2, object.getDescripcion());
             if(ps.executeUpdate() > 0){
@@ -65,7 +67,7 @@ public class CategoriaDAO implements CRUDGeneralInterface<Categoria>{
                 ps.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Creando el objeto");
         }finally{
             ps = null;
             conectar.desconectar();
@@ -155,7 +157,7 @@ public class CategoriaDAO implements CRUDGeneralInterface<Categoria>{
             ps.close();
             rs.close();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Creando el objeto");
         }finally{
              ps = null;
              rs = null;

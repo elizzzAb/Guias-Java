@@ -5,8 +5,10 @@
         <group>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/presentacion/FrmCategoria.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/datos/interfaces/CRUDGeneralInterface.java</file>
+            <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/database/Conexion.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/presentacion/FrmPrincipal.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/datosDAO/CategoriaDAO.java</file>
+            <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/negocio/CategoriaControl.java</file>
         </group>
     </open-files>
 </project-private>
