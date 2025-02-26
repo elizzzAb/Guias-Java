@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Conexion {
     private final String DB_DRIVER = "com.mysql.jdbc.Driver";
     private final String URL="jdbc:mysql://localhost:3306/";  
-    private final String DB = "puntoventa";
+    private final String DB = "puntoventa2";
     private final String USER = "root";
     private final String PASSWORD = "1234"; 
     

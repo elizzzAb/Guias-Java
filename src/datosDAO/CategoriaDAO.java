@@ -102,7 +102,7 @@ public class CategoriaDAO implements CRUDGeneralInterface<Categoria>{
           resp = false;
         try {
             ps = conectar.conectar().prepareStatement
-        ("Update categoria SET estado=1, where id= ?");
+        ("Update categoria SET estado=1 where id= ?");
             ps.setInt(1, id);
             if(ps.executeUpdate() > 0){
                 resp = true;
@@ -123,7 +123,7 @@ public class CategoriaDAO implements CRUDGeneralInterface<Categoria>{
         resp = false;
         try {
             ps = conectar.conectar().prepareStatement
-        ("Update categoria SET estado=0, where id= ?");
+        ("Update categoria SET estado=0 where id= ?");
             ps.setInt(1, id);
             if(ps.executeUpdate() > 0){
                 resp = true;
