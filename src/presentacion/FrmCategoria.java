@@ -4,7 +4,10 @@
  */
 package presentacion;
 
+import javax.swing.JOptionPane;
 import negocio.CategoriaControl;
+import entidades.Categoria;
+
 
 /**
  *
@@ -17,22 +20,41 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
      */
     
     private final  CategoriaControl CONTROL;
+    private String accion;
+    
     
     public FrmCategoria() {
         initComponents();
         this.CONTROL = new  CategoriaControl();
         this.listar("");
+        tabGeneral.setEnabledAt(1, false);
+        this.accion = "Guardar";
     }
     
     private void listar(String texto){
     tablaListado.setModel(this.CONTROL.listar(texto));
     lblCantidadRegistro.setText("Mostra" +
             this.CONTROL.totalMostrados()   +
-            "de un total " +
+            "de un total de " +
             this.CONTROL.total()
                 
     );
     
+    }
+    
+    private void  limpiar(){
+    txtNombre.setText("");
+    txtDescripcion.setText("");
+    this.accion = "Guardar";
+    }
+    
+    private void mensajeError(String mensaje){
+    JOptionPane.showMessageDialog(this,mensaje,"Sistema", JOptionPane.ERROR);
+    
+    }
+    
+    private void mensajeOk(String mensaje){
+    JOptionPane.showMessageDialog(this,mensaje,"Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +65,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        Lista = new javax.swing.JTabbedPane();
+        tabGeneral = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         bntBuscar = new javax.swing.JButton();
@@ -54,6 +76,13 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        txtDescripcion = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -114,7 +143,7 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 65, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblCantidadRegistro, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -137,38 +166,100 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
                 .addContainerGap(79, Short.MAX_VALUE))
         );
 
-        Lista.addTab("Lista", jPanel1);
+        tabGeneral.addTab("Lista", jPanel1);
+
+        jLabel2.setText("Nombre(*)");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Descripcion");
+
+        jLabel4.setText("(*) Campo Obligatorio");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3))
+                                .addGap(109, 109, 109)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                                    .addComponent(txtNombre)))
+                            .addComponent(jLabel4)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(btnGuardar)
+                        .addGap(34, 34, 34)
+                        .addComponent(btnCancelar)))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 396, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(88, 88, 88)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addGap(11, 11, 11)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar)
+                    .addComponent(btnGuardar))
+                .addContainerGap(82, Short.MAX_VALUE))
         );
 
-        Lista.addTab("Mantenimiento", jPanel2);
+        tabGeneral.addTab("Mantenimiento", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Lista)
+            .addComponent(tabGeneral)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(Lista))
+                .addComponent(tabGeneral))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        tabGeneral.setEnabledAt(1, true);
+        tabGeneral.setEnabledAt(0, false);
+        tabGeneral.setSelectedIndex(1);
+        this.accion = "Guardar";
+        btnGuardar.setText("Guardar");
+        
+        
+           
 //        tabGeneral.setEnabledAt(1, true);
 //        tabGeneral.setEnabledAt(0, false);
 //        tabGeneral.setSelectedIndex(1);
@@ -203,18 +294,63 @@ public class FrmCategoria extends javax.swing.JInternalFrame {
     // TODO add your handling code here:
     }//GEN-LAST:event_bntBuscarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tabGeneral.setEnabledAt(0, true);
+        tabGeneral.setEnabledAt(1, false);
+        tabGeneral.setSelectedIndex(0);
+        this.limpiar();
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if(txtNombre.getText().length() == 0){
+            JOptionPane.showMessageDialog(this,"Nombre es obligatorio.",
+                    "Systema", JOptionPane.WARNING_MESSAGE);
+            txtNombre.requestFocus();
+            return;
+        }
+        String respuesta;
+        if(this.accion.equals("editar")){
+            //Editar
+        } else {
+            //Guardar               //Guardar
+            respuesta = this.CONTROL.Insertar(txtNombre.getText(), txtDescripcion.getText());
+            
+            if(respuesta.equals("Ok")){
+            this.mensajeOk("Registro Correctamente");
+            this.limpiar();
+            this.listar("");
+        } else{
+            this.mensajeError(respuesta);
+        }
+            
+        }
+        
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane Lista;
     private javax.swing.JButton bntBuscar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCantidadRegistro;
+    private javax.swing.JTabbedPane tabGeneral;
     private javax.swing.JTable tablaListado;
     private javax.swing.JTextField tfBuscar;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
