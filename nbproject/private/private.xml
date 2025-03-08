@@ -4,6 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/presentacion/FrmCategoria.java</file>
+            <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/entidades/Articulo.java</file>
+            <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/database/Conexion.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/presentacion/FrmPrincipal.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/datosDAO/CategoriaDAO.java</file>
             <file>file:/C:/Users/Elizabeth/Desktop/puntoVenta/src/negocio/CategoriaControl.java</file>
