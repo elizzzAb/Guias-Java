@@ -6,6 +6,7 @@ package datosDAO;
 
 import database.Conexion;
 import datos.interfaces.CRUDGeneralInterface;
+import datos.interfaces.CrudPaginadoInterface;
 import entidades.Articulo;
 import entidades.Categoria;
 import java.util.List;
@@ -20,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Elizabeth
  */
-public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
+public class ArticuloDAO implements CrudPaginadoInterface<Articulo>{
     private final Conexion conectar;
     private PreparedStatement ps;
     private ResultSet rs;
@@ -32,13 +33,13 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
         conectar = Conexion.getInstance();       
     }
     
-    //----------------------------
-    //@Override //ERROR!!!
+    
+    @Override 
     public List<Articulo> getAll(String list, int totalPorPagina, int numPagina) {
         List<Articulo> registros = new ArrayList();
         try {
             ps = conectar.conectar().prepareStatement(
-                "SELECT "+
+               "SELECT "+
                "a.idArticulo,"+
                "a.categoria_id,"+
                "c.nombre as categoria_nombre,"+ 
@@ -49,12 +50,12 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
                "a.descripcion,"+
                "a.imagen,"+
                "a.estado"+     
-              "FROM  articulo a" +
-              "inner join categoria c" +
-              "ON a.categoria_id = c.id"+
-              "Where a.nombre Like ?" +
-              "Order by a.idArticulo ASC" +
-              "Limit ?, ?"
+               "FROM  articulo a" +
+               "inner join categoria c" +
+               "ON a.categoria_id = c.id"+
+               "Where a.nombre Like ?" +
+               "Order by a.idArticulo ASC" +
+               "Limit ?, ?"
             );
             ps.setString(1, "%" + list + "%");
             ps.setInt(2, (numPagina-1) * totalPorPagina );
@@ -65,11 +66,11 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
                 registros.add(new Articulo(
                         rs.getInt(1), // idArticulo
                         rs.getInt(2), //categoria_id
-                         rs.getString(3), //Codigo
+                        rs.getString(3), //Codigo
                         rs.getString(4), //categoria nombre
-                       rs.getDouble(5), //precioVenta
+                        rs.getDouble(5), //precioVenta
                         rs.getInt(6),   //stock
-                         rs.getString(7),// descipcion
+                        rs.getString(7),// descipcion
                         rs.getString(8),// imagen
                         rs.getBoolean(9)//estado
                 ));
@@ -102,17 +103,17 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
                  + "estado) "
                  + "VALUES"
                  + "(?,?,?,?,?,?,?,1)");
-             ps.setInt(1, object.getCategoria_id());
-             ps.setString(2, object.getCodigo());
-             ps.setString(3, object.getNombre());
-             ps.setDouble(4, object.getPrecio_venta());
-             ps.setInt(5, object.getStock());
-             ps.setString(6, object.getDesscriocion());
-              ps.setString(7, object.getImagen());
-             if(ps.executeUpdate() > 0){
-                 resp = true;
-                 ps.close();
-             }
+            ps.setInt(1, object.getCategoria_id());
+            ps.setString(2, object.getCodigo());
+            ps.setString(3, object.getNombre());
+            ps.setDouble(4, object.getPrecio_venta());
+            ps.setInt(5, object.getStock());
+            ps.setString(6, object.getDesscriocion());
+            ps.setString(7, object.getImagen());
+            if(ps.executeUpdate() > 0){
+                resp = true;
+                ps.close();
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Tenemos un problema al insertar el dato " + e.getMessage());
         }finally{
@@ -137,16 +138,16 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
                  + "imagen=?"
                  + "where id= ?");
             ps.setInt(1, object.getCategoria_id());
-             ps.setString(2, object.getCodigo());
-             ps.setString(3, object.getNombre());
-             ps.setDouble(4, object.getPrecio_venta());
-             ps.setInt(5, object.getStock());
-             ps.setString(6, object.getDesscriocion());
-              ps.setString(7, object.getImagen());
-              ps.setInt(8, object.getIdArticulo());
-             if(ps.executeUpdate() > 0){
-                 resp = true;
-                 ps.close();
+            ps.setString(2, object.getCodigo());
+            ps.setString(3, object.getNombre());
+            ps.setDouble(4, object.getPrecio_venta());
+            ps.setInt(5, object.getStock());
+            ps.setString(6, object.getDesscriocion());
+            ps.setString(7, object.getImagen());
+            ps.setInt(8, object.getIdArticulo());
+            if(ps.executeUpdate() > 0){
+                resp = true;
+                ps.close();
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -241,21 +242,11 @@ public class ArticuloDAO implements CRUDGeneralInterface<Articulo>{
          } catch (SQLException e) {
              JOptionPane.showMessageDialog(null, e.getMessage());
          }finally{
-              ps = null;
-              rs = null;
-              conectar.desconectar();
+            ps = null;
+            rs = null;
+            conectar.desconectar();
          }
-         return totalRegistro;
+        return totalRegistro;
     }
-
-    @Override
-    public List<Articulo> getAll(String list) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    
-    
-    
-    
-    
+  
 }
