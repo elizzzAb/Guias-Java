@@ -11,30 +11,14 @@ package entidades;
 public class Articulo {
     private int idArticulo;
     private int categoria_id;
-    private int codigo;
+    private String codigo;
     private String nombre;
     private double precio_venta;
     private int stock ;
     private String desscripcion; 
     private String  imagen; 
     private boolean estado;
-
-    public Articulo() {
-        
-    }
-
-    public Articulo(int idArticulo, int categoria_id, int codigo, String nombre, double precio_venta, int stock, String desscripcion, String imagen, boolean estado) {
-        this.idArticulo = idArticulo;
-        this.categoria_id = categoria_id;
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.precio_venta = precio_venta;
-        this.stock = stock;
-        this.desscripcion = desscripcion;
-        this.imagen = imagen;
-        this.estado = estado;
-    }
-
+    
     public int getIdArticulo() {
         return idArticulo;
     }
@@ -51,11 +35,11 @@ public class Articulo {
         this.categoria_id = categoria_id;
     }
 
-    public int getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(int codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 
@@ -83,12 +67,12 @@ public class Articulo {
         this.stock = stock;
     }
 
-    public String getDesscripcion() {
+    public String getDesscriocion() {
         return desscripcion;
     }
 
-    public void setDesscripcion(String desscripcion) {
-        this.desscripcion = desscripcion;
+    public void setDesscriocion(String desscriocion) {
+        this.desscripcion = desscriocion;
     }
 
     public String getImagen() {
@@ -107,6 +91,25 @@ public class Articulo {
         this.estado = estado;
     }
 
+
+    
+    
+    public Articulo() {
+        
+    }
+
+    public Articulo(int idArticulo, int categoria_id, String codigo, String nombre, double precio_venta, int stock, String desscriocion, String imagen, boolean estado) {
+        this.idArticulo = idArticulo;
+        this.categoria_id = categoria_id;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.precio_venta = precio_venta;
+        this.stock = stock;
+        this.desscripcion = desscriocion;
+        this.imagen = imagen;
+        this.estado = estado;
+        
+    }
     
     
     @Override
